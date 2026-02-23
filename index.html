@@ -1,0 +1,779 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<title>Claim Your FREE VPN Premium — 30 Days Unlimited</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #04040a;
+    --surface: #0d0d1a;
+    --card: #12122a;
+    --accent: #00f5a0;
+    --accent2: #00d9f5;
+    --gold: #ffd500;
+    --danger: #ff4d6d;
+    --text: #f0f0ff;
+    --muted: #8888aa;
+    --radius: 18px;
+    --glow: 0 0 40px rgba(0,245,160,0.25);
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'DM Sans', sans-serif;
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+
+  /* Background mesh */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background:
+      radial-gradient(ellipse 80% 50% at 20% 0%, rgba(0,245,160,0.08) 0%, transparent 60%),
+      radial-gradient(ellipse 60% 40% at 80% 100%, rgba(0,217,245,0.07) 0%, transparent 60%);
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  .funnel-page {
+    display: none;
+    min-height: 100vh;
+    position: relative;
+    z-index: 1;
+    animation: fadeUp 0.5s ease both;
+  }
+  .funnel-page.active { display: flex; flex-direction: column; }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  /* ── PROGRESS BAR ── */
+  .progress-bar {
+    display: flex;
+    gap: 6px;
+    padding: 16px 20px 0;
+    justify-content: center;
+  }
+  .step-dot {
+    height: 4px;
+    border-radius: 99px;
+    background: #1e1e3f;
+    flex: 1;
+    max-width: 60px;
+    transition: background 0.4s;
+  }
+  .step-dot.done { background: var(--accent); }
+  .step-dot.active { background: var(--accent2); }
+
+  /* ── HERO BADGE ── */
+  .badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background: rgba(0,245,160,0.12);
+    border: 1px solid rgba(0,245,160,0.3);
+    color: var(--accent);
+    font-size: 12px;
+    font-weight: 600;
+    padding: 5px 12px;
+    border-radius: 99px;
+    letter-spacing: 0.5px;
+  }
+
+  /* ── TYPOGRAPHY ── */
+  .display {
+    font-family: 'Syne', sans-serif;
+    font-weight: 800;
+    font-size: clamp(26px, 7vw, 36px);
+    line-height: 1.15;
+    letter-spacing: -0.5px;
+  }
+  .highlight { color: var(--accent); }
+  .highlight2 { color: var(--accent2); }
+  .gold { color: var(--gold); }
+
+  p { color: var(--muted); font-size: 15px; line-height: 1.6; }
+
+  /* ── CARDS ── */
+  .card {
+    background: var(--card);
+    border: 1px solid #1e1e3f;
+    border-radius: var(--radius);
+    padding: 18px;
+  }
+
+  .card-glow {
+    background: linear-gradient(135deg, #0d1f1a 0%, #0d0d1a 100%);
+    border-color: rgba(0,245,160,0.2);
+    box-shadow: var(--glow);
+  }
+
+  /* ── BUTTONS ── */
+  .btn-primary {
+    width: 100%;
+    background: linear-gradient(135deg, #00f5a0, #00c97e);
+    color: #000;
+    font-family: 'Syne', sans-serif;
+    font-size: 17px;
+    font-weight: 800;
+    padding: 17px 24px;
+    border: none;
+    border-radius: 14px;
+    cursor: pointer;
+    letter-spacing: 0.2px;
+    position: relative;
+    overflow: hidden;
+    transition: transform 0.15s, box-shadow 0.15s;
+    box-shadow: 0 4px 30px rgba(0,245,160,0.4);
+  }
+  .btn-primary:active { transform: scale(0.97); }
+  .btn-primary::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(rgba(255,255,255,0.15), transparent);
+    pointer-events: none;
+  }
+
+  .btn-secondary {
+    width: 100%;
+    background: transparent;
+    color: var(--muted);
+    font-size: 14px;
+    padding: 12px;
+    border: none;
+    cursor: pointer;
+    text-decoration: underline;
+  }
+
+  .btn-ghost {
+    width: 100%;
+    background: var(--card);
+    border: 1.5px solid #1e1e3f;
+    color: var(--text);
+    font-family: 'DM Sans', sans-serif;
+    font-size: 15px;
+    font-weight: 600;
+    padding: 15px 20px;
+    border-radius: 14px;
+    cursor: pointer;
+    transition: border-color 0.2s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+  }
+  .btn-ghost:hover { border-color: var(--accent); }
+
+  /* ── ICON SHIELD ── */
+  .icon-wrap {
+    width: 70px;
+    height: 70px;
+    border-radius: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 34px;
+    background: linear-gradient(135deg, #0d2010, #0d1a1f);
+    border: 1px solid rgba(0,245,160,0.25);
+    margin: 0 auto;
+  }
+
+  /* ── FEATURE LIST ── */
+  .feature-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    padding: 12px 0;
+    border-bottom: 1px solid #1a1a30;
+  }
+  .feature-item:last-child { border-bottom: none; }
+  .feat-icon {
+    width: 36px;
+    height: 36px;
+    border-radius: 10px;
+    background: rgba(0,245,160,0.1);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 18px;
+    flex-shrink: 0;
+  }
+  .feat-title { font-weight: 600; font-size: 14px; margin-bottom: 2px; }
+  .feat-desc { font-size: 13px; color: var(--muted); }
+
+  /* ── TIMER ── */
+  .timer-box {
+    background: linear-gradient(135deg, #1a0505, #0d0d1a);
+    border: 1px solid rgba(255,77,109,0.3);
+    border-radius: 14px;
+    padding: 14px 18px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .timer-digits {
+    font-family: 'Syne', sans-serif;
+    font-size: 22px;
+    color: var(--danger);
+    font-weight: 800;
+    letter-spacing: 2px;
+  }
+  .timer-label { font-size: 12px; color: var(--muted); }
+
+  /* ── STAR RATING ── */
+  .stars { color: var(--gold); font-size: 16px; letter-spacing: 2px; }
+
+  /* ── STEP CONTENT ── */
+  .page-inner {
+    padding: 20px 20px 30px;
+    max-width: 430px;
+    margin: 0 auto;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+
+  /* ── PULSE animation ── */
+  @keyframes pulse {
+    0%, 100% { box-shadow: 0 4px 30px rgba(0,245,160,0.35); }
+    50% { box-shadow: 0 4px 50px rgba(0,245,160,0.6); }
+  }
+  .btn-primary.pulse { animation: pulse 2s ease infinite; }
+
+  /* ── COUNT BADGE ── */
+  .count-badge {
+    background: rgba(255,213,0,0.1);
+    border: 1px solid rgba(255,213,0,0.3);
+    color: var(--gold);
+    font-size: 12px;
+    font-weight: 600;
+    padding: 4px 10px;
+    border-radius: 99px;
+  }
+
+  /* ── PAGE 4 Steps ── */
+  .install-step {
+    display: flex;
+    align-items: flex-start;
+    gap: 14px;
+  }
+  .step-num {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, var(--accent), var(--accent2));
+    color: #000;
+    font-weight: 800;
+    font-size: 15px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    font-family: 'Syne', sans-serif;
+  }
+  .step-content { padding-top: 4px; }
+  .step-content strong { font-size: 15px; display: block; margin-bottom: 3px; }
+  .step-content span { font-size: 13px; color: var(--muted); }
+
+  /* ── SUCCESS CHECK ── */
+  @keyframes scaleIn {
+    from { transform: scale(0.4); opacity: 0; }
+    to { transform: scale(1); opacity: 1; }
+  }
+  .success-icon {
+    width: 90px;
+    height: 90px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #00f5a0, #00c97e);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 44px;
+    margin: 0 auto;
+    animation: scaleIn 0.6s cubic-bezier(0.34, 1.56, 0.64, 1) both;
+  }
+
+  /* ── DIVIDER ── */
+  .divider {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    color: var(--muted);
+    font-size: 13px;
+  }
+  .divider::before, .divider::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: #1e1e3f;
+  }
+
+  /* ── SOCIAL PROOF ── */
+  .avatars {
+    display: flex;
+  }
+  .av {
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    border: 2px solid var(--bg);
+    margin-left: -8px;
+    font-size: 13px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .avatars .av:first-child { margin-left: 0; }
+
+  /* ── SCROLL LOCK when transition ── */
+  .no-scroll { overflow: hidden; }
+
+  /* ── TOP NAV ── */
+  .topnav {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 16px 20px;
+  }
+  .logo {
+    font-family: 'Syne', sans-serif;
+    font-weight: 800;
+    font-size: 18px;
+    background: linear-gradient(90deg, var(--accent), var(--accent2));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  /* ── TRUST BAR ── */
+  .trust-bar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: rgba(255,255,255,0.03);
+    border: 1px solid #1e1e3f;
+    border-radius: 12px;
+    padding: 10px 16px;
+  }
+  .trust-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 2px;
+  }
+  .trust-val {
+    font-family: 'Syne', sans-serif;
+    font-weight: 700;
+    font-size: 15px;
+    color: var(--text);
+  }
+  .trust-lbl { font-size: 11px; color: var(--muted); }
+
+  /* ── OFFER BOX ── */
+  .offer-box {
+    background: linear-gradient(135deg, #0a1a10, #0a0d1a);
+    border: 2px dashed rgba(0,245,160,0.35);
+    border-radius: var(--radius);
+    padding: 20px;
+    text-align: center;
+  }
+  .offer-price {
+    font-family: 'Syne', sans-serif;
+    font-size: 48px;
+    font-weight: 800;
+    color: var(--accent);
+    line-height: 1;
+  }
+  .offer-was {
+    font-size: 14px;
+    color: var(--muted);
+    text-decoration: line-through;
+  }
+</style>
+</head>
+<body>
+
+<!-- ╔══════════════════════════════╗ -->
+<!-- ║  PAGE 1 — HOOK / HEADLINE   ║ -->
+<!-- ╚══════════════════════════════╝ -->
+<section class="funnel-page active" id="page1">
+  <div class="topnav">
+    <span class="logo">⚡ LumosVPN</span>
+    <span class="badge">🇺🇸 US Only</span>
+  </div>
+
+  <div class="progress-bar">
+    <div class="step-dot active"></div>
+    <div class="step-dot"></div>
+    <div class="step-dot"></div>
+    <div class="step-dot"></div>
+  </div>
+
+  <div class="page-inner">
+
+    <div style="text-align:center; padding: 8px 0;">
+      <div class="icon-wrap">🛡️</div>
+      <div style="margin-top:10px;">
+        <span class="badge">✨ Limited Time Offer</span>
+      </div>
+    </div>
+
+    <div style="text-align:center;">
+      <h1 class="display">Get <span class="highlight">30 Days FREE</span><br>VPN Premium Access</h1>
+      <p style="margin-top:12px; font-size:16px;">Unlock blazing-fast, military-grade private browsing — completely free for a full month. No credit card. No catch.</p>
+    </div>
+
+    <div class="trust-bar">
+      <div class="trust-item">
+        <span class="trust-val">10M+</span>
+        <span class="trust-lbl">Downloads</span>
+      </div>
+      <div style="width:1px;height:30px;background:#1e1e3f;"></div>
+      <div class="trust-item">
+        <span class="trust-val">4.8★</span>
+        <span class="trust-lbl">App Rating</span>
+      </div>
+      <div style="width:1px;height:30px;background:#1e1e3f;"></div>
+      <div class="trust-item">
+        <span class="trust-val">70+</span>
+        <span class="trust-lbl">Countries</span>
+      </div>
+    </div>
+
+    <!-- Timer -->
+    <div class="timer-box">
+      <span style="font-size:22px;">🔥</span>
+      <div style="flex:1">
+        <div class="timer-label">FREE offer expires in</div>
+        <div class="timer-digits" id="timer">14:59</div>
+      </div>
+      <div>
+        <div class="count-badge" id="claimCount">🟢 847 claimed today</div>
+      </div>
+    </div>
+
+    <!-- Social proof -->
+    <div style="display:flex;align-items:center;gap:10px;">
+      <div class="avatars">
+        <div class="av" style="background:#2a4a3a;">😊</div>
+        <div class="av" style="background:#1a2a4a;">😄</div>
+        <div class="av" style="background:#3a2a1a;">😍</div>
+        <div class="av" style="background:#2a1a3a;">🤩</div>
+      </div>
+      <div>
+        <div class="stars">★★★★★</div>
+        <div style="font-size:12px;color:var(--muted);">Loved by 2.4M Americans</div>
+      </div>
+    </div>
+
+    <button class="btn-primary pulse" onclick="goTo(2)">
+      🎁 Claim My FREE Month Now →
+    </button>
+    <p style="text-align:center;font-size:12px;">✅ Instant access &nbsp;•&nbsp; No credit card &nbsp;•&nbsp; Android only</p>
+
+  </div>
+</section>
+
+<!-- ╔═══════════════════════════════╗ -->
+<!-- ║  PAGE 2 — BENEFITS / WHY     ║ -->
+<!-- ╚═══════════════════════════════╝ -->
+<section class="funnel-page" id="page2">
+  <div class="topnav">
+    <span class="logo">⚡ LumosVPN</span>
+    <span class="badge">Step 2 of 4</span>
+  </div>
+
+  <div class="progress-bar">
+    <div class="step-dot done"></div>
+    <div class="step-dot active"></div>
+    <div class="step-dot"></div>
+    <div class="step-dot"></div>
+  </div>
+
+  <div class="page-inner">
+
+    <div>
+      <h2 class="display">Here's What You Get <span class="highlight">100% FREE</span></h2>
+      <p style="margin-top:8px;">Premium features normally worth $9.99/month — yours for free for 30 days.</p>
+    </div>
+
+    <div class="card card-glow">
+      <div class="feature-item">
+        <div class="feat-icon">⚡</div>
+        <div>
+          <div class="feat-title">Lightning Fast Servers</div>
+          <div class="feat-desc">Stream, browse & game at full speed. Zero throttling, ever.</div>
+        </div>
+      </div>
+      <div class="feature-item">
+        <div class="feat-icon">🔒</div>
+        <div>
+          <div class="feat-title">Military-Grade Encryption</div>
+          <div class="feat-desc">AES-256 keeps your data invisible to hackers & ISPs.</div>
+        </div>
+      </div>
+      <div class="feature-item">
+        <div class="feat-icon">🌍</div>
+        <div>
+          <div class="feat-title">70+ Global Locations</div>
+          <div class="feat-desc">Access content from anywhere with one tap.</div>
+        </div>
+      </div>
+      <div class="feature-item">
+        <div class="feat-icon">🕵️</div>
+        <div>
+          <div class="feat-title">Strict No-Log Policy</div>
+          <div class="feat-desc">Your activity is never stored. Total privacy, guaranteed.</div>
+        </div>
+      </div>
+      <div class="feature-item">
+        <div class="feat-icon">📶</div>
+        <div>
+          <div class="feat-title">Unlimited Bandwidth</div>
+          <div class="feat-desc">No limits. Watch, download, browse — all you want.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="offer-box">
+      <div class="offer-was">Regular price: $9.99/month</div>
+      <div class="offer-price">$0</div>
+      <div style="color:var(--accent);font-weight:600;font-size:14px;margin-top:4px;">Your first 30 days — completely FREE</div>
+    </div>
+
+    <button class="btn-primary pulse" onclick="goTo(3)">
+      Yes! I Want My FREE Month →
+    </button>
+    <button class="btn-secondary" onclick="goTo(3)">Skip — show me how to get it</button>
+
+  </div>
+</section>
+
+<!-- ╔════════════════════════════════╗ -->
+<!-- ║  PAGE 3 — CONFIRM / URGENCY  ║ -->
+<!-- ╚════════════════════════════════╝ -->
+<section class="funnel-page" id="page3">
+  <div class="topnav">
+    <span class="logo">⚡ LumosVPN</span>
+    <span class="badge">Step 3 of 4</span>
+  </div>
+
+  <div class="progress-bar">
+    <div class="step-dot done"></div>
+    <div class="step-dot done"></div>
+    <div class="step-dot active"></div>
+    <div class="step-dot"></div>
+  </div>
+
+  <div class="page-inner">
+
+    <div>
+      <h2 class="display">You're <span class="highlight2">One Tap</span> Away From Your Free Premium!</h2>
+      <p style="margin-top:8px;">Thousands of Americans are protecting their privacy right now. Don't miss your free slot.</p>
+    </div>
+
+    <!-- Urgency block -->
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;">
+      <div class="card" style="text-align:center;padding:16px;">
+        <div style="font-size:26px;margin-bottom:6px;">⏱️</div>
+        <div style="font-family:'Syne',sans-serif;font-size:20px;font-weight:800;color:var(--danger)" id="timer2">14:59</div>
+        <div style="font-size:11px;color:var(--muted);margin-top:3px;">Offer expires</div>
+      </div>
+      <div class="card" style="text-align:center;padding:16px;">
+        <div style="font-size:26px;margin-bottom:6px;">👥</div>
+        <div style="font-family:'Syne',sans-serif;font-size:20px;font-weight:800;color:var(--gold);" id="slotsLeft">23</div>
+        <div style="font-size:11px;color:var(--muted);margin-top:3px;">Free slots left</div>
+      </div>
+    </div>
+
+    <!-- Review -->
+    <div class="card">
+      <div style="display:flex;align-items:center;gap:10px;margin-bottom:10px;">
+        <div class="av" style="background:#1a3a2a;font-size:18px;width:40px;height:40px;border:none;">👩</div>
+        <div>
+          <div style="font-weight:600;font-size:14px;">Sarah M. — Texas</div>
+          <div class="stars" style="font-size:13px;">★★★★★</div>
+        </div>
+      </div>
+      <p style="font-size:14px;color:var(--text);">"I was skeptical at first but it was literally FREE and took 1 minute. Now my whole family uses it. The speed is insane — I can't believe how much I was overpaying before!"</p>
+    </div>
+
+    <div class="divider">How to claim</div>
+
+    <!-- Mini steps preview -->
+    <div style="display:flex;flex-direction:column;gap:10px;">
+      <div style="display:flex;align-items:center;gap:12px;font-size:14px;">
+        <div style="width:24px;height:24px;border-radius:50%;background:var(--accent);color:#000;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:12px;flex-shrink:0;">1</div>
+        <span>Tap the button below</span>
+      </div>
+      <div style="display:flex;align-items:center;gap:12px;font-size:14px;">
+        <div style="width:24px;height:24px;border-radius:50%;background:var(--accent);color:#000;display:flex;align-items:center;justify-content:function;font-weight:800;font-size:12px;flex-shrink:0;display:flex;align-items:center;justify-content:center;">2</div>
+        <span>Install Lumos VPN from Google Play</span>
+      </div>
+      <div style="display:flex;align-items:center;gap:12px;font-size:14px;">
+        <div style="width:24px;height:24px;border-radius:50%;background:var(--accent);color:#000;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:12px;flex-shrink:0;">3</div>
+        <span>Open the app & enjoy premium free!</span>
+      </div>
+    </div>
+
+    <button class="btn-primary pulse" onclick="goTo(4)">
+      🚀 Claim My FREE Premium Now
+    </button>
+    <p style="text-align:center;font-size:12px;color:var(--muted);">🔒 Secure • Free • Android only • US residents</p>
+
+  </div>
+</section>
+
+<!-- ╔═══════════════════════════════════╗ -->
+<!-- ║  PAGE 4 — INSTALL INSTRUCTIONS  ║ -->
+<!-- ╚═══════════════════════════════════╝ -->
+<section class="funnel-page" id="page4">
+  <div class="topnav">
+    <span class="logo">⚡ LumosVPN</span>
+    <span class="badge" style="background:rgba(0,245,160,0.2);border-color:rgba(0,245,160,0.5);">✅ Slot Reserved!</span>
+  </div>
+
+  <div class="progress-bar">
+    <div class="step-dot done"></div>
+    <div class="step-dot done"></div>
+    <div class="step-dot done"></div>
+    <div class="step-dot active"></div>
+  </div>
+
+  <div class="page-inner">
+
+    <div style="text-align:center;">
+      <div class="success-icon">🎉</div>
+      <h2 class="display" style="margin-top:16px;">Your <span class="highlight">FREE Month</span> is Reserved!</h2>
+      <p style="margin-top:8px;">Follow these 3 quick steps to activate your premium access right now.</p>
+    </div>
+
+    <div class="card card-glow">
+      <div style="display:flex;flex-direction:column;gap:18px;">
+
+        <div class="install-step">
+          <div class="step-num">1</div>
+          <div class="step-content">
+            <strong>Open Google Play Store</strong>
+            <span>Tap the button below to go straight there</span>
+          </div>
+        </div>
+
+        <div style="height:1px;background:#1e1e3f;"></div>
+
+        <div class="install-step">
+          <div class="step-num">2</div>
+          <div class="step-content">
+            <strong>Install "Lumos VPN: Fast VPN Master"</strong>
+            <span>It's 100% free to download — tap "Install" on the Play Store page</span>
+          </div>
+        </div>
+
+        <div style="height:1px;background:#1e1e3f;"></div>
+
+        <div class="install-step">
+          <div class="step-num">3</div>
+          <div class="step-content">
+            <strong>Open the app & connect</strong>
+            <span>Launch Lumos VPN and tap "Connect" — your free premium is automatically activated!</span>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- Countdown on last page -->
+    <div class="timer-box">
+      <span style="font-size:20px;">⚡</span>
+      <div style="flex:1;">
+        <div class="timer-label">Your slot expires in</div>
+        <div class="timer-digits" id="timer3">14:59</div>
+      </div>
+      <span style="font-size:12px;color:var(--muted);">Don't wait!</span>
+    </div>
+
+    <a href="https://singingfiles.com/show.php?l=0&u=2501394&id=71658" style="text-decoration:none;">
+      <button class="btn-primary pulse" style="font-size:19px;padding:20px;">
+        📲 Install Lumos VPN FREE →
+      </button>
+    </a>
+
+    <div style="display:flex;gap:10px;flex-wrap:wrap;justify-content:center;">
+      <span style="font-size:12px;color:var(--muted);">✅ No credit card</span>
+      <span style="font-size:12px;color:var(--muted);">✅ 100% free</span>
+      <span style="font-size:12px;color:var(--muted);">✅ Trusted by 10M+</span>
+    </div>
+
+    <!-- Final review -->
+    <div class="card" style="display:flex;align-items:flex-start;gap:12px;">
+      <div class="av" style="background:#1a2a3a;font-size:20px;width:44px;height:44px;border:none;flex-shrink:0;">👨</div>
+      <div>
+        <div style="font-weight:600;font-size:13px;margin-bottom:2px;">Mike D. — California</div>
+        <div class="stars" style="font-size:12px;">★★★★★</div>
+        <p style="font-size:13px;margin-top:5px;color:var(--text);">"Took me literally 45 seconds to install. Been using the free premium for 3 weeks and the speeds are unbelievable."</p>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<script>
+  // ── Navigation ──
+  function goTo(n) {
+    document.querySelectorAll('.funnel-page').forEach(p => p.classList.remove('active'));
+    document.getElementById('page' + n).classList.add('active');
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+
+  // ── Countdown Timer (15 minutes) ──
+  let totalSeconds = 14 * 60 + 59;
+  function fmt(s) {
+    const m = Math.floor(s / 60);
+    const sec = s % 60;
+    return String(m).padStart(2,'0') + ':' + String(sec).padStart(2,'0');
+  }
+  function tick() {
+    if (totalSeconds <= 0) { totalSeconds = 14 * 60 + 59; }
+    const str = fmt(totalSeconds);
+    ['timer','timer2','timer3'].forEach(id => {
+      const el = document.getElementById(id);
+      if (el) el.textContent = str;
+    });
+    totalSeconds--;
+  }
+  tick();
+  setInterval(tick, 1000);
+
+  // ── Fake claim count ──
+  let claims = 847;
+  setInterval(() => {
+    if (Math.random() > 0.6) {
+      claims += Math.floor(Math.random() * 3) + 1;
+      const el = document.getElementById('claimCount');
+      if (el) el.textContent = '🟢 ' + claims + ' claimed today';
+    }
+  }, 4000);
+
+  // ── Fake slots countdown ──
+  let slots = 23;
+  setInterval(() => {
+    if (Math.random() > 0.5 && slots > 3) {
+      slots -= 1;
+      const el = document.getElementById('slotsLeft');
+      if (el) el.textContent = slots;
+    }
+  }, 8000);
+</script>
+</body>
+</html>
